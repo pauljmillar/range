@@ -1,0 +1,60 @@
+extends ../layout
+
+block content
+  .pmainbanner.mdl-typography--text-center
+    .logo-font.android-slogan #{post.name}
+    .logo-font.android-sub-slogan #{post.slug}
+    button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect
+    
+  .mdl-grid.demo-content
+    .demo-graphs.mdl-shadow--2dp.mdl-color--white.mdl-cell.mdl-cell--8-col
+      .mdl-card__title.mdl-card--expand.mdl-color--teal-300
+        h2.mdl-card__title-text Post
+      .mdl-card__supporting-text.mdl-color-text--grey-600
+        form(method='POST', action='/blog')
+          input(type='hidden', name='_csrf', value=_csrf)
+          input(type='hidden', name='author', value=user._id)
+          input(type='hidden', name='id', value=post._id)
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='title') Title
+            input#title.mdl-textfield__input(type='text', name='title', value=post.title)
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='slug') Slug
+            input#slug.mdl-textfield__input(type='text', name='slug', value=post.slug)
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='description') Description
+            input#description.mdl-textfield__input(type='text', name='description', value=post.description)
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='text') Text
+            textarea#text.mdl-textfield__input(rows=8, type='text', name='text').form-control= post.text
+            
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='tags') Tags
+            input#tags.mdl-textfield__input(type='text', name='tags', value=post.tags)
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for='switch-1') 
+              input#switch-1.mdl-switch__input(type='checkbox', name='active' checked=post.active)
+              span.mdl-switch__label  Is Post Live 
+          .mdl-cell.mdl-cell--12-col.send-button(align='right')
+            a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/blog')
+              | Cancel
+            button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(name='action', value='update', type='submit')
+              | Update
+            button#delete.mdl-button.mdl-js-button(name='action', value='delete', type='submit')
+              | Delete
+    .demo-cards.mdl-cell.mdl-cell--4-col.mdl-cell--8-col-tablet.mdl-grid.mdl-grid--no-spacing
+      .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop
+        .mdl-card__title.mdl-card--expand.mdl-color--teal-300
+          h2.mdl-card__title-text Check In
+        .mdl-card__supporting-text.mdl-color-text--grey-600
+          | You are currently not checked in to any location.
+        .mdl-card__actions.mdl-card--border
+          a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#') Find Locations
+      .demo-separator.mdl-cell--1-col
+      .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop
+        .mdl-card__title.mdl-card--expand.mdl-color--teal-300
+          h2.mdl-card__title-text Billing
+        .mdl-card__supporting-text.mdl-color-text--grey-600
+          | Update your billing info here.
+        .mdl-card__actions.mdl-card--border
+          a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#') Update Billing

@@ -1,0 +1,87 @@
+extends layout
+
+block content
+  .pmainbanner.mdl-typography--text-center
+    .logo-font.android-slogan Each space is unique
+    .logo-font.android-sub-slogan  All are quiet, confortable, and convenient
+    //
+      div class="logo-font android-create-character">
+      <a href=""><img src="images/andy.png"> create your android character</a>
+      </div
+    a.smooth(href='#bottom')
+      button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect
+        i.material-icons expand_more
+
+  //section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
+    .mdl-card.mdl-cell.mdl-cell--12-col
+      .mdl-card__supporting-text.mdl-grid.mdl-grid--no-spacing
+        h4.mdl-cell.mdl-cell--12-col Every Range Location is unique, but they all share these features:
+        .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+          .section__circle-container__circle.mdl-color--primary
+        .section__text.mdl-cell.mdl-cell--10-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+          h5 Quiet
+          | Our spaces are quiet so you can concentrate.                  
+        .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+          .section__circle-container__circle.mdl-color--primary
+        .section__text.mdl-cell.mdl-cell--10-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+          h5 Comfortable
+          | Spacious work areas, comfortable chairs, accessible power outlets                   
+          a(href='/signup') Try it
+          | .
+        .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+          .section__circle-container__circle.mdl-color--primary
+        .section__text.mdl-cell.mdl-cell--10-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+          h5 Convenient
+          |  It takes 30 seconds to join. When you arrive at your location for the day, simply check in online.  We are adding new locations each week.                     
+          a(href='/contact') Find the location nearest you. 
+          | None in your neighborhood?  
+      .mdl-card__actions
+        a.mdl-button(href='/contact') Suggest One
+
+
+  for loc in allLocations
+    section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
+      header.section__play-btn.mdl-cell.mdl-cell--3-col-desktop.mdl-cell--2-col-tablet.mdl-cell--4-col-phone.mdl-color--teal-100.mdl-color-text--white(style='background-image: url(/uploads/' + loc.previewimage + ');')
+        a.mdl-button(href='/locations/' + loc.locationid, style='text-decoration:none; color:white')
+          i.material-icons play_circle_filled
+      .mdl-card.mdl-cell.mdl-cell--9-col-desktop.mdl-cell--6-col-tablet.mdl-cell--4-col-phone
+        .mdl-card__supporting-text
+          h4 #{loc.name}
+          | #{loc.description}
+        .mdl-card__actions
+          a.mdl-button(href='/locations/' + loc.locationid)  Read our features
+      button#btn1.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
+        i.material-icons more_vert
+      ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right(for='btn1')
+        li.mdl-menu__item Set as home
+        li.mdl-menu__item(disabled='') Hide
+        li.mdl-menu__item Contact
+        
+  section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp
+    #bottom.mdl-card.mdl-cell.mdl-cell--12-col
+      .mdl-card__supporting-text
+        h4 Add your location
+        | If you own a restaurant, coffee shop, or other comfortable space with wifi, and you'd like to convert it to a coworking space by day, let's talk.                  
+      .mdl-card__actions
+        a.mdl-button(href='newspace') Find out how
+    button#btn3.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
+      i.material-icons more_vert
+    //ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right(for='btn3')
+      li.mdl-menu__item Lorem
+      li.mdl-menu__item(disabled='') Ipsum
+      li.mdl-menu__item Dolor
+
+  section.section--footer.mdl-color--white.mdl-grid
+    .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+      .section__circle-container__circle.mdl-color--accent.section__circle--big
+    .section__text.mdl-cell.mdl-cell--4-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+      h5 Find the location nearest to you
+      |  Click to view a map of Range Coworking locations near you
+      a.mdl-button(href='/contact') View Map
+    .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+      .section__circle-container__circle.mdl-color--accent.section__circle--big
+    .section__text.mdl-cell.mdl-cell--4-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+      h5 No locations nearby?
+      |  We're adding new locations every month.  If you'd like a Coworking location added near you, let us know.
+      a.mdl-button(href='/contact') Let us know
+

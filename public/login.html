@@ -1,0 +1,89 @@
+<!doctype html>
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Introducing Lollipop, a sweet new take on Android.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Range Coworking</title>
+    
+    <!-- Material Design Lite CSS -->
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Material Design icon font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<style>
+    .signup-center {
+        margin: auto;
+    }
+
+    .util-max-512px {
+        max-width: 512px;
+    }
+
+    .signup-spacing-h--40px {
+        margin-top: 40px;
+        margin-bottom: 40px
+    }
+    .util-no-decoration {
+        text-decoration: none;
+    }
+</style>
+
+<body class="">
+ 
+ 
+<!-- LOGIN FORM -->
+<div class="mdl-grid mdl-color--blue-grey-50">
+
+    <div class="mdl-card mdl-shadow--16dp signup-center signup-spacing-h--40px">
+        <div class="mdl-card__title mdl-color--green-500" style="padding-top:120px">
+            <h2 class="mdl-card__title-text mdl-color-text--white">Log in to Range</h2>
+        </div>
+        <div class="mdl-card__supporting-text mdl-grid">
+          
+            <!--b class="mdl-color-text--accent">Error message goes here</b-->
+          
+
+            <form method="POST" action="/login">
+                <input type="hidden" name="action" value="login"/>
+
+
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+                    <label class="mdl-textfield__label mdl-color-text--grey" for="email">Email</label>
+                    <input class="mdl-textfield__input" type="email" id="email" name="username"/>
+                </div>
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+                    <label class="mdl-textfield__label mdl-color-text--grey" for="password">Password</label>
+                    <input class="mdl-textfield__input" type="password" id="password" name="password"/>
+
+                </div>
+
+                <div class="mdl-cell mdl-cell--12-col send-button" align="right">
+                    <a href="/forgot" class="mdl-button mdl-js-button mdl-button--accent" id="login">
+                        forgot password?
+                    </a>
+                    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast" id="login">
+                        Log in
+                    </button>
+              </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Material Design Lite JavaScript -->
+<script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
+
+</body>
+</html>

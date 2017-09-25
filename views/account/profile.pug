@@ -1,0 +1,69 @@
+extends ../layout
+
+block content
+  .pmainbanner.mdl-typography--text-center
+    .logo-font.android-slogan #{user.profile.name}
+    .logo-font.android-sub-slogan #{user.email}
+    a(href='#')
+      button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect
+        i.material-icons person
+  .mdl-grid.demo-content
+    .demo-graphs.mdl-shadow--2dp.mdl-color--white.mdl-cell.mdl-cell--8-col
+      .mdl-card__title.mdl-card--expand.mdl-color--teal-300
+        h2.mdl-card__title-text Account
+      .mdl-card__supporting-text.mdl-color-text--grey-600
+        form(method='POST', action='/account/profile')
+          input(type='hidden', name='_csrf', value=_csrf)
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='email') Email
+            input#email.mdl-textfield__input(type='email', name='email', value=user.email)
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='name') Name
+            input#name.mdl-textfield__input(type='text', name='name', value=user.profile.name)
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='address') Address
+            input#address.mdl-textfield__input(type='password', name='address')
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='location') Favorite Location
+            input#location.mdl-textfield__input(type='text', name='location', value=user.profile.location)
+          .mdl-cell.mdl-cell--12-col.send-button(align='right')
+            a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
+              | Reset password
+            button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
+              | Update
+    .demo-cards.mdl-cell.mdl-cell--4-col.mdl-cell--8-col-tablet.mdl-grid.mdl-grid--no-spacing
+      .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop
+        form(method='POST', action='/account/checkin')
+          input(type='hidden', name='_csrf', value=_csrf)
+          if user.checkInTime && (user.checkInTime.getDate() == new Date().getDate())
+            .mdl-card__title.mdl-card--expand.mdl-color--teal-300
+              h2.mdl-card__title-text Check Out
+            .mdl-card__supporting-text.mdl-color-text--grey-600
+                | You are currently checked in at 
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  select#locationid.mdl-textfield__input(name='locationid', disabled)
+                    for location in allLocations
+                      option(selected=location.id == user.checkInLocation, value=location.id) #{location.name}
+            .mdl-card__actions.mdl-card--border
+              button.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#', type='submit') Check Out
+
+          else  
+            .mdl-card__title.mdl-card--expand.mdl-color--teal-300
+              h2.mdl-card__title-text Check In
+            .mdl-card__supporting-text.mdl-color-text--grey-600
+                | Not checked in. Choose a location: 
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  select#locationid.mdl-textfield__input(name='locationid')
+                    for location in allLocations
+                      option(selected=location.id == user.checkInLocation, value=location.id) #{location.name}
+            .mdl-card__actions.mdl-card--border
+              button.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#', type='submit') Check In
+              a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#') Map              
+      .demo-separator.mdl-cell--1-col
+      .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop
+        .mdl-card__title.mdl-card--expand.mdl-color--teal-300
+          h2.mdl-card__title-text Billing
+        .mdl-card__supporting-text.mdl-color-text--grey-600
+          | Update your billing info here.
+        .mdl-card__actions.mdl-card--border
+          a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#') Update Billing

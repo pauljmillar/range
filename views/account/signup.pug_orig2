@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+    .left
+        h1 Sign up
+        |     
+        |     
+        input(type='text', name='username', placeholder='Username')
+        |     
+        input(type='text', name='email', placeholder='E-mail')
+        |     
+        input(type='password', name='password', placeholder='Password')
+        |     
+        input(type='password', name='password2', placeholder='Retype password')
+        |     
+        |     
+        input(type='submit', name='signup_submit', value='Sign me up')
+    |   
+    |   
+    .right
+        span.loginwith
+          | Sign in with
+          br
+          | social network
+        |     
+        |     
+        button.social-signin.facebook Log in with facebook
+        |     
+        button.social-signin.twitter Log in with Twitter
+        |     
+        button.social-signin.google Log in with Google+
+    |   
+    .or OR

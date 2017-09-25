@@ -1,0 +1,55 @@
+extends ../layout
+
+block content
+  .pmainbanner.mdl-typography--text-center(style='background-image: url(/images/b2.jpg)')
+    .android-slogan.newlogo 
+      i.material-icons(style='font-size:48px') wifi 
+      | &nbsp;range
+    .logo-font.android-sub-slogan  Convenience is within Range
+    //
+      div class="logo-font android-create-character">
+      <a href=""><img src="images/andy.png"> create your android character</a>
+      </div
+    if user
+      if user.isAdmin 
+        a(href='/blog/new')
+          button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect
+            i.material-icons add
+    else
+      button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect
+
+
+
+  for post in allPosts
+    section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
+      header.section__play-btn.mdl-cell.mdl-cell--3-col-desktop.mdl-cell--2-col-tablet.mdl-cell--4-col-phone.mdl-color--teal-100.mdl-color-text--white(style='background-image: url(/images/' + post.previewimage + ');')
+        a.mdl-button(href='/blog/' + post.slug, style='text-decoration:none; color:white')
+          i.material-icons 
+      .mdl-card.mdl-cell.mdl-cell--9-col-desktop.mdl-cell--6-col-tablet.mdl-cell--4-col-phone
+        .mdl-card__supporting-text
+          h4 #{post.title}
+          h6 #{post.createdAt.toDateString()}
+          .mdl-typography--headline.mdl-typography--font-thin !{post.text.substr(0, 200) + '...'}
+        .mdl-card__actions
+          a.mdl-button(href='/blog/' + post.slug)  Read More
+          if user
+            if user.isAdmin
+              a.mdl-button(href='/blog/' + post._id + '/edit')  Edit
+
+        
+
+
+  section.section--footer.mdl-color--white.mdl-grid
+    .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+      .section__circle-container__circle.mdl-color--accent.section__circle--big
+    .section__text.mdl-cell.mdl-cell--4-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+      h5 Find the location nearest to you
+      |  Click to view a map of Range Coworking locations near you
+      a.mdl-button(href='/contact') View Map
+    .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+      .section__circle-container__circle.mdl-color--accent.section__circle--big
+    .section__text.mdl-cell.mdl-cell--4-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+      h5 No locations nearby?
+      |  We're adding new locations every month.  If you'd like a Coworking location added near you, let us know.
+      a.mdl-button(href='/contact') Let us know
+

@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  .pmainbanner.mdl-typography--text-center
+    .logo-font.android-slogan Contact Us
+    .logo-font.android-sub-slogan  We'd love to hear from you
+    a.smooth(href='#')
+      button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect
+        i.material-icons email
+        
+  section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
+    #bottom.mdl-card.mdl-cell.mdl-cell--12-col
+      .mdl-card__supporting-text
+        h4 Send us a note
+        
+      .mdl-card__supporting-text.mdl-color-text--grey-600
+        form(method='POST', action='/contact')
+          input(type='hidden', name='_csrf', value=_csrf)
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='email') Email
+            input#email.mdl-textfield__input(type='email', name='email')
+          //.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            select#octane.mdl-textfield__input(name='octane')
+              option(value='') Reason
+              option(value='87') 87
+              option(value='89') 89
+              option(value='91') 91
+              option(value='diesel') Diesel
+            //label.mdl-textfield__label.mdl-color-text--grey(for='octane') Email
+    
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='name') Name
+            input#name.mdl-textfield__input(type='text', name='name')
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='message') Message
+            textarea#message.mdl-textfield__input(type='text', name='message', rows='3')
+          .mdl-cell.mdl-cell--12-col.send-button(align='right')
+            button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
+              | Submit
+              
+
+
+

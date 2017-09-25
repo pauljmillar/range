@@ -1,0 +1,66 @@
+header.mdl-layout__header.android-header.mdl-layout__header--waterfall
+  .mdl-layout__header-row
+    span.android-title.mdl-layout-title.newlogo
+      // img class="android-logo-image" src="images/android-logo.png"
+      a.newlogo(href='/', style='text-decoration:none') range
+    // Add spacer, to align navigation to the right in desktop
+    .android-header-spacer.mdl-layout-spacer
+    .android-search-box.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable.mdl-textfield--floating-label.mdl-textfield--align-right.mdl-textfield--full-width
+      label.mdl-button.mdl-js-button.mdl-button--icon(for='search-field')
+        i.material-icons search
+      .mdl-textfield__expandable-holder
+        input#search-field.mdl-textfield__input(type='text')
+    span.android-mobile-title.mdl-layout-title.newlogo
+      a.newlogo(href='/', style='text-decoration:none') range
+      // img class="android-logo-image" src="images/android-logo.png"
+    button#profile-button.android-more-button.mdl-button.mdl-js-button.mdl-button--icon.mdl-js-ripple-effect
+      i.material-icons person
+    ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right.mdl-js-ripple-effect(for='profile-button')
+      if user
+        if user.isLocation
+          a(href='/locations/account', style='text-decoration:none')
+            li.mdl-menu__item Profile
+        else
+          a(href='/account', style='text-decoration:none')
+            li.mdl-menu__item Profile        
+        a(href='/logout', style='text-decoration:none')
+          li.mdl-menu__item Sign Out
+      else
+        a(href='/login', style='text-decoration:none')
+          li.mdl-menu__item Log In
+        a(href='/signup', style='text-decoration:none')
+          li.mdl-menu__item Sign Up    
+        // li disabled class="mdl-menu__item">Locations - Sign Up</li
+        a(href='/login', style='text-decoration:none')
+          li.mdl-menu__item Location Sign Up
+.android-drawer.mdl-layout__drawer
+  span.mdl-layout-title.newlogowhite
+    | range
+    // img class="android-logo-image" src="images/android-logo-white.png"
+  nav.mdl-navigation
+    a.mdl-navigation__link(href='/locations') Locations
+    a.mdl-navigation__link(href='/join') How it works
+    a.mdl-navigation__link(href='/join') Why
+    a.mdl-navigation__link(href='/newspace') Add your space
+    .android-drawer-separator
+    a.mdl-navigation__link(href='/blog') Blog
+    a.mdl-navigation__link(href='/contact') Contact
+    
+    //
+      div class="android-drawer-separator"></div>
+      <span class="mdl-navigation__link" href="">Versions</span>
+      <a class="mdl-navigation__link" href="">Lollipop 5.0</a>
+      <a class="mdl-navigation__link" href="">KitKat 4.4</a>
+      <a class="mdl-navigation__link" href="">Jelly Bean 4.3</a>
+      <a class="mdl-navigation__link" href="">Android history</a>
+      <div class="android-drawer-separator"></div>
+      <span class="mdl-navigation__link" href="">Resources</span>
+      <a class="mdl-navigation__link" href="">Official blog</a>
+      <a class="mdl-navigation__link" href="">Android on Google+</a>
+      <a class="mdl-navigation__link" href="">Android on Twitter</a>
+      <div class="android-drawer-separator"></div>
+      <span class="mdl-navigation__link" href="">For developers</span>
+      <a class="mdl-navigation__link" href="">App developer resources</a>
+      <a class="mdl-navigation__link" href="">Android Open Source Project</a>
+      <a class="mdl-navigation__link" href="">Android SDK</a
+    

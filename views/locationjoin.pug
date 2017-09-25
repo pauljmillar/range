@@ -1,0 +1,100 @@
+extends layout
+
+block content
+  .pmainbanner.mdl-typography--text-center
+    .logo-font.android-slogan Put your empty tables to work
+    .logo-font.android-sub-slogan Turn your restaurant into a daytime coworking space -- and extra revenue
+    a(href='/contact')
+      button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect
+        i.material-icons add
+
+  section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
+    .mdl-card.mdl-cell.mdl-cell--12-col
+      .mdl-card__supporting-text.mdl-grid.mdl-grid--no-spacing
+        h4.mdl-cell.mdl-cell--12-col If you own a coffee shop or restaurant that is quiet or closed during the day, open your space to coworking professionals during that time.
+        .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+          .section__circle-container__circle.mdl-color--primary
+        .section__text.mdl-cell.mdl-cell--10-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+          h5 Revenue
+          | Generate                      
+          a(href='#payment') thousands 
+          | in additional monthly recurring revenue for opening your space to professionals who need a quiet place to work.
+        .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+          .section__circle-container__circle.mdl-color--primary
+        .section__text.mdl-cell.mdl-cell--10-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+          h5 Promotion
+          | When a member visits your location to work during the day, you get the opportunity to bring them back for dinner. Increase your exposure in your neighborhood, and nationwide.                   
+        .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+          .section__circle-container__circle.mdl-color--primary
+        .section__text.mdl-cell.mdl-cell--10-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+          h5 Convenient
+          |  We handle all of the payments and administration. All you need to do is provide a comfortable space, good wifi, and one complimentary beverage to your members.                     
+          a(href='/contact') Contact us to get started. 
+          | See below for a complete list of location requirements.
+      .mdl-card__actions
+        a.mdl-button(href='/contact') Questions? Ready to start?
+        
+  section.section--center.mdl-grid.mdl-grid--no-spacing
+    .mdl-cell.mdl-cell--12-col
+      h4 How it works
+      | If you don't open until dinner, or are quiet for parts of the day, earn extra monthly revenue by allowing professionals to sit with their laptops from 8am-5pm. 
+      ul.toc
+        h4 Details
+        a(href='#locationrequirements') Location requirements
+        a(href='#payment') Payment
+        a(href='#checkin') Member checkin
+        a(href='#commitment') Commitment
+        
+      h5#locationrequirements Location requirements
+      |  If you'd like to open your space into a Range coworking space during the day, contact us.  You're a good candidate if you have:
+      ul
+        li Strong wifi. Most, if not all of the professionals who visit you during the day will need to use your wifi.  You can publicize your wifi password in your store, or on your Range profile page, or both.
+        li Basic ammenities like washrooms and electrical outlets.  If you have outlets everywhere, mention that on your Range profile page.
+        li A quiet space.  No loud music please.
+        li Fairly regular hours.  For example, M-Fr 8:30-4:30pm.  If you have to close next Tuesday morning to paint the dining room, that is ok.  We ask that you give your members at least one week notice of planned closures, when possible. 
+        li Open at least five days per week, ideally Monday through Friday.  If you're closed completely on Mondays and you want to keep it that way, that is ok.
+        li One complimentary coffee or tea for each member, each day.  The happier a member is visiting your space, the more likely they are to renew their membership.
+        li Food service is not included in membership, and therefore you are not required to serve food or snacks.  If you do, you will be responsible for collecting payment from your customers. 
+        li Someone available to unlock the door, restart the wifi, adjust the thermastat, or help with any general questions about the space. 
+        li Adequate insurance.  You already have a restaurant or coffee shop, so there should be nothing to do here.  Range Coworking does no offer any protections. 
+      p
+        | If this is you, 
+        a(href='/contact') contact us to get started
+        | . If you have questions, let us know.
+        
+      h5#payment Payment
+      |  Payment processing is simple as a Range Coworking partner.  
+      ul
+        li We collect monthly payment from our members electronically, so no money changes hands at the location.
+        li We make our monthly payments to you and our other locations electronically, monthly.  
+        li Each member who signs up for your location earns you $50/month.
+
+      h5#checkin Member checkin
+      |  Member checkin is also simple.  
+      ul
+        li Members are asked to check in electronically to the Range location they visit.  In return, they receive the wifi password. Your staff are not required to do anything on-site for the member check in process.
+        li Periodically during the day, it is a good idea to view your Dashboard via the Range Coworking website to monitor your guests, and to make sure visitors are not using your space without a membership.  
+        li The Location Dashboard will show you daily, weekly, and monthly trends and metrics reflective of your occupancy.
+ 
+      h5#commitment Commitment
+      |  You may cancel your commitment to the Range location network at any time by giving us and your members 30 days notice.  
+      ul
+        li Joining the Range Coworking network is free.  If it doesn't work out for you and your location, you can cancel with 30 days notice.  
+        li We'll help broadcast the news to your members 30 days in advance.   
+ 
+  section.section--footer.mdl-color--white.mdl-grid
+    .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+      .section__circle-container__circle.mdl-color--accent.section__circle--big
+    .section__text.mdl-cell.mdl-cell--4-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+      h5 Questions?
+      | Let us know!  
+      a(href='/contact') We'll return your inquiry 
+      | within 24 hours.
+    .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+      .section__circle-container__circle.mdl-color--accent.section__circle--big
+    .section__text.mdl-cell.mdl-cell--4-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+      h5 Suggest a space
+      | If you don't own a restaurant, but know of a place you wish allowed coworking during the day,  
+      a(href='/contact') let us know  
+      | and we'll reach out.  Thanks!
+

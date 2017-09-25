@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+  .pmainbanner.mdl-typography--text-center(style='background-image: url(/images/' + post.mainimage + ');')
+    .demo-back
+      a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href='/blog', title='go back', role='button')
+        i.material-icons(role='presentation') arrow_back
+    .logo-font.android-slogan   #{post.title}
+    .logo-font.android-sub-slogan 
+    a(href='#')
+      button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect
+        i.material-icons     
+
+
+  section.section--center.mdl-grid.mdl-grid--no-spacing
+   .mdl-cell.mdl-cell--12-col
+      h4 #{post.createdAt.toDateString()}
+      .mdl-typography--headline.mdl-typography--font-thin !{post.text}
+  
+
+
+
