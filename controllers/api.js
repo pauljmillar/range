@@ -567,7 +567,7 @@ exports.getFileUpload = (req, res) => {
   });
 };
 
-exports.postFileUpload = (req, res) => {
+exports.postFileUploadLocation = (req, res) => {
   
     var fileName = req.file.originalname.toLowerCase(); //request.file.name; // original file name
     var file = req.file.path; // real file path with temporary name
@@ -584,19 +584,53 @@ exports.postFileUpload = (req, res) => {
 			//update the location record in the asset record
       Location.findById(req.params.locationid, (err, loc) => {
         if (err) { return next(err); }
-        loc.mainimage = fileName;
-        loc.save((err) => {
+				if (req.params.phototype === 'mainimage')
+        	loc.mainimage = fileName;
+				if (req.params.phototype === 'previewimage')
+        	loc.previewimage = fileName;
+				if (req.params.phototype === 'image3')
+        	loc.image3 = fileName;
+				if (req.params.phototype === 'image4')
+        	loc.image4 = fileName;
+				if (req.params.phototype === 'image5')
+        	loc.image5 = fileName;
+				loc.save((err) => {
           if (err) { return next(err); }
           req.flash('success', { msg: 'File was uploaded successfully.' });
           res.redirect('/locations/account');
         });
       });
 			
-    });
+    });  
+};
 
-  
-  
 
+exports.postFileUploadUser = (req, res) => {
+  
+    var fileName = req.file.originalname.toLowerCase(); //request.file.name; // original file name
+    var file = req.file.path; // real file path with temporary name
+
+    // renaming real file to it's original name
+    //fs.rename(file, './public/pages/'+request.params.pageId+'/'+fileName, function (err) {
+    fs.rename(file, './public/uploads/'+fileName, function (err) {
+      if (err) {
+        console.log(err);
+         req.flash('error', { msg: err });
+       return;
+      }
+
+			//update the location record in the asset record
+      User.findById(req.params.userid, (err, usr) => {
+        if (err) { return next(err); }
+        usr.profile.picture = fileName;
+        usr.save((err) => {
+          if (err) { return next(err); }
+          req.flash('success', { msg: 'Photo was uploaded successfully.' });
+          res.redirect('/account');
+        });
+      });
+			
+    });  
 };
 
 /**

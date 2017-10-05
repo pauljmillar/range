@@ -49,6 +49,7 @@ exports.postLogin = (req, res, next) => {
     req.flash('errors', errors);
     return res.redirect('/login');
   }
+   
 
   passport.authenticate('local', (err, user, info) => {
     if (err) { return next(err); }
@@ -58,7 +59,7 @@ exports.postLogin = (req, res, next) => {
     }
     req.logIn(user, (err) => {
       if (err) { return next(err); }
-      req.flash('success', { msg: 'Success! You are logged in.' });
+      //req.flash('success', { msg: 'Success! You are logged in.' });
       if (user.isLocation) {res.redirect('/locations/account')}
       else { res.redirect('/account')}
       //res.redirect(req.session.returnTo || '/account');
@@ -122,6 +123,29 @@ exports.postSignup = (req, res, next) => {
     email: req.body.email,
     password: req.body.password
   });
+  
+  const sendSignupEmail = (user) => {   
+       
+    const transporter = nodemailer.createTransport(
+      sendgridTransport({
+        auth: {
+          api_key: process.env.SENDGRID_PASSWORD, // SG password
+        },
+      })
+    );
+    
+    const mailOptions = {
+      to: 'paul.millar@gmail.com',
+      from: 'signup@rangeco.work',
+      subject: `New Range Signup: ${user.email}`,
+      text: `Hello,\n\nRange user ${user.email} has just signed up.\n`
+    };
+    
+    return transporter.sendMail(mailOptions)
+      .then(() => {
+        req.flash('success', { msg: 'Welcome to Range.' });
+      }); 
+  };  
 
   User.findOne({ email: req.body.email }, (err, existingUser) => {
     if (err) { return next(err); }
@@ -135,7 +159,9 @@ exports.postSignup = (req, res, next) => {
         if (err) {
           return next(err);
         }
-        res.redirect('/account');
+        //alert admin of new signupsendSignupEmail;
+        sendSignupEmail(user);
+        return res.redirect('/account');
       });
     });
   });
@@ -188,7 +214,7 @@ exports.postLocationSignup = (req, res, next) => {
 
 /**
  * GET /account
- * Profile page.
+ * Dashboard page.
  */
 exports.getAccount = (req, res) => {
   
@@ -198,8 +224,27 @@ exports.getAccount = (req, res) => {
       req.flash('errors', { msg: 'Found no locations.' });
       //return res.redirect('/locations');
     }
-    res.render('account/profile', {
+    res.render('account/dashboard', {
       title: 'Mange Account',
+      allLocations
+    });
+  });
+};
+
+/**
+ * GET /account
+ * Profile page.
+ */
+exports.getAccountUser = (req, res) => {
+  
+    Location.find({ active:true }, (err, allLocations) => {
+    if (err) { return next(err); }
+    if (!allLocations) {
+      req.flash('errors', { msg: 'Found no locations.' });
+      //return res.redirect('/locations');
+    }
+    res.render('account/user', {
+      title: 'Mange User Profile',
       allLocations
     });
   });
@@ -222,11 +267,12 @@ exports.postUpdateProfile = (req, res, next) => {
 
   User.findById(req.user.id, (err, user) => {
     if (err) { return next(err); }
-    user.email = req.body.email || '';
-    user.profile.name = req.body.name || '';
-    user.profile.gender = req.body.gender || '';
-    user.profile.location = req.body.location || '';
-    user.profile.website = req.body.website || '';
+    user.email = req.body.email || user.email;
+    user.password = req.body.password || user.password;
+    user.profile.name = req.body.name || user.profile.name;
+    user.profile.gender = req.body.gender || user.profile.gender;
+    user.profile.homelocation = req.body.homelocation || user.profile.homelocation;
+    user.profile.website = req.body.website || user.profile.website;
     user.save((err) => {
       if (err) {
         if (err.code === 11000) {
@@ -287,20 +333,66 @@ exports.postUpdateCheckIn = (req, res, next) => {
       evt.type = 'checkout';
       checkInMsg = 'You are checked out.';
       
+      Location.findById(req.body.locationid, (err, loc) => {
+        if (err) { return next(err); }
+        console.log('about to check out' + loc._id);
+        loc.seatsTaken = loc.seatsTaken === 0 ? 0 : loc.seatsTaken - 1;
+       // loc.seatsTaken =  loc.seatsTaken - 1;
+        loc.save((err) => {
+          if (err) { 
+            req.flash('error', { msg: 'There was a problem checking out.' });
+            return res.redirect('/account');
+          }
+        
+          user.save((err) => {
+            if (err) { return next(err); }
+
+            evt.save((err) => {
+              if (err) { return next(err); }
+              req.flash('success', { msg: checkInMsg });
+              res.redirect('/account');
+            });    
+          });
+        });
+      });
     } else {
       user.checkInTime = new Date().toISOString();
       user.checkInLocation = req.body.locationid;
       evt.type='checkin';
-    }
-    user.save((err) => {
-      if (err) { return next(err); }
       
-      evt.save((err) => {
+      Location.findById(req.body.locationid, (err, loc) => {
         if (err) { return next(err); }
-        req.flash('success', { msg: checkInMsg });
-        res.redirect('/account');
-      });    
-    });
+        console.log('about to check');
+        if (loc.seatsTaken + 1 >= loc.seats){
+          console.log('seatstaken + 1 > seats ');
+          
+          req.flash('errors', { msg: 'Sorry, no seats available.' });
+          return res.redirect('/account');
+        }
+
+        loc.seatsTaken = loc.seatsTaken + 1; 
+        loc.save((err) => {
+          if (err) { 
+            req.flash('error', { msg: 'There was a problem checking in.' });
+            return res.redirect('/account');
+          }
+          
+          user.save((err) => {
+          if (err) { return next(err); }
+      
+            evt.save((err) => {
+            if (err) { return next(err); }
+              req.flash('success', { msg: checkInMsg });
+              return res.redirect('/account');
+            });    
+            });
+          
+         });
+      });
+      
+      
+    }
+
   });
 };
 
@@ -405,7 +497,7 @@ exports.postReset = (req, res, next) => {
     );
     const mailOptions = {
       to: user.email,
-      from: 'passwords@range.co',
+      from: 'passwords@rangeco.work',
       subject: 'Your Range Coworking password has been changed',
       text: `Hello,\n\nThis is a confirmation that the password for your account ${user.email} has just been changed.\n`
     };
@@ -428,10 +520,11 @@ exports.postReset = (req, res, next) => {
 exports.getForgot = (req, res) => {
   if (req.isAuthenticated()) {
     return res.redirect('/');
-  }
+  }  
   res.render('account/forgot', {
     title: 'Forgot Password'
   });
+
 };
 
 /**

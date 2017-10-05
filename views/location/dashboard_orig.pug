@@ -1,0 +1,153 @@
+extends ../layout
+
+block content
+  .mdl-typography--display-1-color-contrast(style='padding:50px;') #{location.name}
+
+  .mdl-grid.demo-content
+    .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid
+      svg.demo-chart.mdl-cell.mdl-cell--12-col.mdl-cell--12-col-desktop(fill='currentColor', width='200px', height='200px', viewbox='0 0 1 1')
+        use(xlink:href='#piechart', mask='url(#piemask)')
+        text(x='0.5', y='0.5', font-family='Roboto', font-size='0.3', fill='#888', text-anchor='middle', dy='0.1')
+          | 8
+          tspan(font-size='0.1', dy='-0.07') guests
+
+    .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid
+      svg.demo-chart.mdl-cell.mdl-cell--12-col.mdl-cell--12-col-desktop(fill='blue', width='200px', height='200px', viewbox='0 0 1 1')
+        use(xlink:href='#piechart', mask='url(#piemask)')
+        text(x='0.5', y='0.5', font-family='Roboto', font-size='0.3', fill='#888', text-anchor='middle', dy='0.1')
+          | 4
+          tspan(font-size='0.1', dy='-0.07') avail
+          
+    .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--4-col-desktop
+      .mdl-card__title.mdl-card--expand
+        h2.mdl-card__title-text
+        form(method='POST', action='/locations/profile')
+          input(type='hidden', name='_csrf', value=_csrf)
+          input(type='hidden', name='id', value=location._id)
+          if location.locationuserid
+            input(type='hidden', name='locationuserid', value=location.locationuserid)          
+          else
+            input(type='hidden', name='locationuserid', value=user._id)          
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='wifipassword') Wifi Password
+            input#wifipassword.mdl-textfield__input(type='text', name='wifipassword', value=location.wifipassword)
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+            label.mdl-textfield__label.mdl-color-text--grey(for='announcement') Note Today
+            input#announcement.mdl-textfield__input(type='text', name='announcement', value=location.announcement) 
+          .mdl-grid
+            .mdl-cell.mdl-cell--4-col.send-button(align='left')
+              .mdl-color-text--grey TODAY         
+            .mdl-cell.mdl-cell--8-col.send-button(align='right')
+              button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
+                | Update
+
+
+    .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--12-col.mdl-cell--8-col-tablet.mdl-cell--8-col-desktop
+      .mdl-card__title(style='min-height:100px')
+        h2.mdl-card__title-text Checked In Now
+      table.mdl-data-table.mdl-js-data-table.mdl-data-table--selectable.mdl-cell.mdl-cell--12-col.mdl-cell--12-col-tablet.mdl-cell--12-col-desktop(style='margin:0;width:100%;border:0')
+        thead
+          tr
+            th.mdl-data-table__cell--non-numeric Name
+            th Check In Time
+            th Message
+        tbody.mdl-color-text--grey
+          tr
+            td.mdl-data-table__cell--non-numeric Jane Doe
+            td 11:23am
+            td 
+              i.material-icons textsms
+          tr
+            td.mdl-data-table__cell--non-numeric John Doe
+            td 11:34am
+            td 
+              i.material-icons textsms
+          tr
+            td.mdl-data-table__cell--non-numeric Sarah Costello
+            td 9:15am
+            td 
+              i.material-icons textsms        
+          tr
+            td.mdl-data-table__cell--non-numeric John Doe
+            td 11:34am
+            td 
+              i.material-icons textsms
+          tr
+            td.mdl-data-table__cell--non-numeric Sarah Costello
+            td 9:15am
+            td 
+              i.material-icons textsms        
+          tr
+            td.mdl-data-table__cell--non-numeric Jane Doe
+            td 11:23am
+            td 
+              i.material-icons textsms
+          tr
+            td.mdl-data-table__cell--non-numeric John Doe
+            td 11:34am
+            td 
+              i.material-icons textsms
+          tr
+            td.mdl-data-table__cell--non-numeric Sarah Costello
+            td 9:15am
+            td 
+              i.material-icons textsms
+
+
+
+    .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--12-col.mdl-cell--4-col-tablet.mdl-cell--4-col-desktop
+      .mdl-card__title.mdl-card--expand.mdl-color--teal-300
+        h2.mdl-card__title-text.mdl-color-text--white Your Account
+      .mdl-card__supporting-text.mdl-color-text--grey-600
+        h4 Dashboard
+        h4 Profile
+        h4 Payments
+        h4 Config
+
+    .demo-graphs.mdl-shadow--2dp.mdl-color--white.mdl-cell.mdl-cell--12-col
+      svg.demo-graph(fill='currentColor', viewbox='0 0 500 200')
+        use(xlink:href='#chart')
+
+
+  br
+  br
+
+          
+              
+  svg(xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', version='1.1', style='position: fixed; left: -1000px; height: -1000px;')
+    defs
+      mask#piemask(maskcontentunits='objectBoundingBox')
+        circle(cx='0.5', cy='0.5', r='0.49', fill='white')
+        circle(cx='0.5', cy='0.5', r='0.40', fill='black')
+      g#piechart
+        circle(cx='0.5', cy='0.5', r='0.5')
+        path(d='M 0.5 0.5 0.5 0 A 0.5 0.5 0 0 1 0.95 0.28 z', stroke='none', fill='rgba(255, 255, 255, 0.75)')
+  svg(version='1.1', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', viewbox='0 0 500 250', style='position: fixed; left: -1000px; height: -1000px;')
+    defs
+      g#chart
+        g#Gridlines
+          line(fill='#c3bebe', stroke='#c3bebe', stroke-miterlimit='5', x1='0', y1='27.3', x2='468.3', y2='27.3')
+          line(fill='#c3bebe', stroke='#c3bebe', stroke-miterlimit='5', x1='0', y1='66.7', x2='468.3', y2='66.7')
+          line(fill='#c3bebe', stroke='#c3bebe', stroke-miterlimit='5', x1='0', y1='105.3', x2='468.3', y2='105.3')
+          line(fill='#c3bebe', stroke='#c3bebe', stroke-miterlimit='5', x1='0', y1='144.7', x2='468.3', y2='144.7')
+          line(fill='#c3bebe', stroke='#c3bebe', stroke-miterlimit='5', x1='0', y1='184.3', x2='468.3', y2='184.3')
+        g#Numbers
+          text(transform='matrix(1 0 0 1 485 29.3333)', fill='#888888', font-family="'Roboto'", font-size='9') 10
+          text(transform='matrix(1 0 0 1 485 69)', fill='#888888', font-family="'Roboto'", font-size='9') 8
+          text(transform='matrix(1 0 0 1 485 109.3333)', fill='#888888', font-family="'Roboto'", font-size='9') 6
+          text(transform='matrix(1 0 0 1 485 149)', fill='#888888', font-family="'Roboto'", font-size='9') 4
+          text(transform='matrix(1 0 0 1 485 188.3333)', fill='#888888', font-family="'Roboto'", font-size='9') 2
+          text(transform='matrix(1 0 0 1 0 249.0003)', fill='#888888', font-family="'Roboto'", font-size='9') 1
+          text(transform='matrix(1 0 0 1 78 249.0003)', fill='#888888', font-family="'Roboto'", font-size='9') 2
+          text(transform='matrix(1 0 0 1 154.6667 249.0003)', fill='#888888', font-family="'Roboto'", font-size='9') 3
+          text(transform='matrix(1 0 0 1 232.1667 249.0003)', fill='#888888', font-family="'Roboto'", font-size='9') 4
+          text(transform='matrix(1 0 0 1 309 249.0003)', fill='#888888', font-family="'Roboto'", font-size='9') 5
+          text(transform='matrix(1 0 0 1 386.6667 249.0003)', fill='#888888', font-family="'Roboto'", font-size='9') 6
+          text(transform='matrix(1 0 0 1 464.3333 249.0003)', fill='#888888', font-family="'Roboto'", font-size='9') 7
+        g#Layer_5
+          polygon(opacity='0.36', stroke-miterlimit='10', points='0,223.3 48,138.5 154.7,169 211,88.5\
+          294.5,80.5 380,165.2 437,75.5 469.5,223.3 	')
+        g#Layer_4
+          polygon(stroke-miterlimit='10', points='469.3,222.7 1,222.7 48.7,166.7 155.7,188.3 212,132.7\
+          296.7,128 380.7,184.3 436.7,125 	')
+

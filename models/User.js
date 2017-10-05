@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
   profile: {
     name: String,
     gender: String,
-    location: String,
+    homelocation: {type: mongoose.Schema.Types.ObjectId, ref: 'Location'},
     website: String,
     picture: String
   }

@@ -1,101 +1,210 @@
 extends ../layout
 
 block content
-  .pmainbanner.mdl-typography--text-center(style='background-image: url(/uploads/' + location.mainimage + ');')
-    if location
-      .logo-font.android-slogan.mdl-color-text--white #{location.name}      
-    else 
-      .logo-font.android-slogan Create your account
-    .logo-font.android-sub-slogan.mdl-color-text--white #{user.email}
-    a(href='#')
-      button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect
-        i.material-icons person
-  .mdl-grid.demo-content
-    .demo-graphs.mdl-shadow--2dp.mdl-color--white.mdl-cell.mdl-cell--8-col
-      .mdl-card__title.mdl-card--expand.mdl-color--teal-300
-        h2.mdl-card__title-text Account
-      .mdl-card__supporting-text.mdl-color-text--grey-600
-        form(method='POST', action='/locations/profile')
-          input(type='hidden', name='_csrf', value=_csrf)
-          input(type='hidden', name='id', value=location._id)
-          if location.locationuserid
-            input(type='hidden', name='locationuserid', value=location.locationuserid)          
-          else
-            input(type='hidden', name='locationuserid', value=user._id)          
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-textfield__label.mdl-color-text--grey(for='name') Restaurant Name
-            input#name.mdl-textfield__input(type='text', name='name', value=location.name)
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-textfield__label.mdl-color-text--grey(for='locationid') Unique Restaurant Name
-            input#locationid.mdl-textfield__input(type='text', name='locationid', value=location.locationid, pattern='^[a-z0-9_]{6,15}$')
-            span.mdl-textfield__error
-              | 6-15 lowercase characters or underscores only, no spaces
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-textfield__label.mdl-color-text--grey(for='hours') Hours
-            input#hours.mdl-textfield__input(type='text', name='hours', value=location.hours)
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-textfield__label.mdl-color-text--grey(for='announcement') Announcement
-            input#announcement.mdl-textfield__input(type='text', name='announcement', value=location.announcement)
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-textfield__label.mdl-color-text--grey(for='wifipassword') Wifi Password
-            input#wifipassword.mdl-textfield__input(type='text', name='wifipassword', value=location.wifipassword)
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-textfield__label.mdl-color-text--grey(for='description') Description
-            input#description.mdl-textfield__input(type='text', name='description', value=location.description)
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-textfield__label.mdl-color-text--grey(for='address') Address
-            input#address.mdl-textfield__input(type='text', name='address', value=location.address)
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-textfield__label.mdl-color-text--grey(for='city') City
-            input#city.mdl-textfield__input(type='text', name='city', value=location.city)
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-textfield__label.mdl-color-text--grey(for='state') State
-            input#state.mdl-textfield__input(type='text', name='state', value=location.state)
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-textfield__label.mdl-color-text--grey(for='phone') Phone
-            input#phone.mdl-textfield__input(type='text', name='phone', value=location.phone)  
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-textfield__label.mdl-color-text--grey(for='email') Email
-            input#email.mdl-textfield__input(type='email', name='email', value=location.email)  
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-textfield__label.mdl-color-text--grey(for='website') Website
-            input#website.mdl-textfield__input(type='text', name='website', value=location.website) 
-          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-            label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for='switch-1') 
-              input#switch-1.mdl-switch__input(type='checkbox', name='active' checked=location.active)
-              span.mdl-switch__label  Is Profile Live  
-          .mdl-cell.mdl-cell--12-col.send-button(align='right')
-            a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
-              | View Profile Info
-            button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
-              | Update
-    .demo-cards.mdl-cell.mdl-cell--4-col.mdl-cell--8-col-tablet.mdl-grid.mdl-grid--no-spacing
-      .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop
-        .mdl-card__title.mdl-card--expand.mdl-color--teal-300
-          h2.mdl-card__title-text View Check Ins
-        .mdl-card__supporting-text.mdl-color-text--grey-600
-          | Number of people currently checked into your location: 5.
-        .mdl-card__actions.mdl-card--border
-          a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#') Find Locations
-      .demo-separator.mdl-cell--1-col
-      .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop
-        .mdl-card__title.mdl-card--expand.mdl-color--teal-300
-          h2.mdl-card__title-text Payments
-        .mdl-card__supporting-text.mdl-color-text--grey-600
-          | Update your payment info here.
-        .mdl-card__actions.mdl-card--border
-          a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#') Update Billing
-      .demo-separator.mdl-cell--1-col
-      .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop
-        form(role='form', enctype='multipart/form-data', method='POST', action='/api/upload/'+location._id)
-          .mdl-card__title.mdl-card--expand.mdl-color--teal-300
-            h2.mdl-card__title-text Images
-          .mdl-card__supporting-text.mdl-color-text--grey-600 
-            .form-group
-              label.mdl-textfield__label.mdl-color-text--grey(for='myFile') 
-              #{location.mainimage}
-              input(type='file', name='myFile')
+  .mdl-color--grey-200
+    br
+    .mdl-grid.demo-content
+      .demo-cards.mdl-cell.mdl-cell--4-col.mdl-cell--3-col-desktop.mdl-grid.mdl-grid--no-spacing
 
-          .mdl-card__actions.mdl-card--border
-            button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
-              | Update
+        .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop.mdl-cell--hide-phone
+          .mdl-card__title(style='height:160px; background: url(/uploads/' + location.previewimage + ') center/cover; position:relative;')       
+            button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect(style='background-image: url(/uploads/' + location.previewimage + ') center/cover; ')
+          .mdl-card__actions(style='padding: 16px;')
+            | #{location.name}
+            p(style='color:grey') #{user.email}
+          .mdl-card__menu
+            button.mdl-button.mdl-button--icon.mdl-js-button.mdl-js-ripple-effect
+              i.material-icons(style='color:white') edit
+
+        .demo-separator.mdl-cell--1-col
+        .demo-options.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--3-col-tablet.mdl-cell--12-col-desktop
+
+          .mdl-tabs.mdl-js-tabs.vertical-mdl-tabs.mdl-js-ripple-effect(style='padding:0;')
+                .mdl-tabs__tab-bar(style='padding-top:30px')
+                  a.mdl-tabs__tab(href='/locations/account')
+                    span.hollow-circle
+                    | Dashboard
+                  a.mdl-tabs__tab.is-active(href='/locations/account/profile')
+                    span.hollow-circle
+                    | Restaurant Profile
+                  a.mdl-tabs__tab(href='/locations/account/payments')
+                    span.hollow-circle
+                    | Payments
+                  a.mdl-tabs__tab(href='/locations/account/user')
+                    span.hollow-circle
+                    | User Profile          
+
+      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--9-col-desktop
+        .mdl-card__title.mdl-card--expand
+          h2.mdl-card__title-text Account Basics
+        .mdl-card__supporting-text.mdl-color-text--grey-600
+          form(method='POST', action='/locations/profile')
+            input(type='hidden', name='_csrf', value=_csrf)
+            input(type='hidden', name='id', value=location._id)
+            if location.locationuserid
+              input(type='hidden', name='locationuserid', value=location.locationuserid)          
+            else
+              input(type='hidden', name='locationuserid', value=user._id)          
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='name') Restaurant Name
+              input#name.mdl-textfield__input(type='text', name='name', value=location.name)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='locationid') Unique Restaurant Name
+              input#locationid.mdl-textfield__input(type='text', name='locationid', value=location.locationid, pattern='^[a-z0-9_]{6,15}$')
+              span.mdl-textfield__error
+                | 6-15 lowercase characters or underscores only, no spaces
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='address') Address
+              input#address.mdl-textfield__input(type='text', name='address', value=location.address)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='city') City
+              input#city.mdl-textfield__input(type='text', name='city', value=location.city)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='state') State
+              input#state.mdl-textfield__input(type='text', name='state', value=location.state)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='phone') Phone
+              input#phone.mdl-textfield__input(type='text', name='phone', value=location.phone)  
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='email') Email
+              input#email.mdl-textfield__input(type='email', name='email', value=location.email)  
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='website') Website
+              input#website.mdl-textfield__input(type='text', name='website', value=location.website) 
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for='switch-1') 
+                input#switch-1.mdl-switch__input(type='checkbox', name='active' checked=location.active)
+                span.mdl-switch__label  Is Profile Live  
+            .mdl-cell.mdl-cell--12-col.send-button(align='right')
+              a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
+                | View Profile Info
+              button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
+                | Update
+
+      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--9-col-desktop.mdl-cell--3-offset-desktop
+        .mdl-card__title.mdl-card--expand
+          h2.mdl-card__title-text Profile Page Basics
+        .mdl-card__supporting-text.mdl-color-text--grey-600
+          form(method='POST', action='/locations/profile')
+            input(type='hidden', name='_csrf', value=_csrf)
+            input(type='hidden', name='id', value=location._id)
+            if location.locationuserid
+              input(type='hidden', name='locationuserid', value=location.locationuserid)          
+            else
+              input(type='hidden', name='locationuserid', value=user._id)          
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='hours') Hours
+              input#hours.mdl-textfield__input(type='text', name='hours', value=location.hours)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='announcement') Announcement
+              input#announcement.mdl-textfield__input(type='text', name='announcement', value=location.announcement)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='wifipassword') Wifi Password
+              input#wifipassword.mdl-textfield__input(type='text', name='wifipassword', value=location.wifipassword)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='description') Description
+              input#description.mdl-textfield__input(type='text', name='description', value=location.description)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='seats') Number of seats to make available
+              input#seats.mdl-textfield__input(type='text', name='seats', value=location.seats, pattern='-?[0-9]*(\.[0-9]+)?')
+              span.mdl-textfield__error Input is not a number!                         
+            .mdl-cell.mdl-cell--12-col.send-button(align='right')
+              a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
+                | View Profile Info
+              button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
+                | Update
+
+      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--9-col-desktop.mdl-cell--3-offset-desktop
+        .mdl-card__title.mdl-card--expand
+          h2.mdl-card__title-text Profile Page Cont'd
+        .mdl-card__supporting-text.mdl-color-text--grey-600
+          form(method='POST', action='/locations/profile')
+            input(type='hidden', name='_csrf', value=_csrf)
+            input(type='hidden', name='id', value=location._id)
+            if location.locationuserid
+              input(type='hidden', name='locationuserid', value=location.locationuserid)          
+            else
+              input(type='hidden', name='locationuserid', value=user._id)          
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='feature1') Feature 1
+              input#feature1.mdl-textfield__input(type='text', name='feature1', value=location.feature1)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='feature1desc') Feature 1 Description
+              input#feature1desc.mdl-textfield__input(type='text', name='feature1desc', value=location.feature1desc)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='feature2') Feature 2
+              input#feature2.mdl-textfield__input(type='text', name='feature2', value=location.feature2)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='feature2desc') Feature 2 Description
+              input#feature2desc.mdl-textfield__input(type='text', name='feature2desc', value=location.feature2desc)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='feature3') Feature 3
+              input#feature3.mdl-textfield__input(type='text', name='feature3', value=location.feature3)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='feature3desc') Feature 3 Description
+              input#feature3desc.mdl-textfield__input(type='text', name='feature3desc', value=location.feature3desc)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='offer1') Offer 1
+              input#offer1.mdl-textfield__input(type='text', name='offer1', value=location.offer1)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='offer1desc') Offer 1 Description
+              input#offer1desc.mdl-textfield__input(type='text', name='offer1desc', value=location.offer1desc)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='offer2') Offer 2
+              input#offer2.mdl-textfield__input(type='text', name='offer2', value=location.offer2)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='offer2desc') Offer 2 Description
+              input#offer2desc.mdl-textfield__input(type='text', name='offer2desc', value=location.offer2desc)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='longdescription') Long Description
+              input#longdescription.mdl-textfield__input(type='text', name='longdescription', value=location.longdescription)
+            .mdl-cell.mdl-cell--12-col.send-button(align='right')
+              a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
+                | View Profile Info
+              button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
+                | Update
+                
+      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--3-col-desktop.mdl-cell--3-offset-desktop
+        .mdl-card__title.mdl-card--expand
+          h2.mdl-card__title-text Photo1
+        .mdl-card__supporting-text.mdl-color-text--grey-600
+          form(method='POST', action='/locations/profile')      
+            //label.mdl-textfield__label.mdl-color-text--grey(for='myFile') 
+            //#{location.mainimage}
+            //button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='file', name='myFile')
+            //input(type='file', name='myFile')
+            label.file-upload
+              input#file(type='file', name='myFile', multiple='', accept='image/*, video/*')
+              span.file-upload_button Choose Files
+            .mdl-cell.mdl-cell--12-col.send-button(align='right')
+              a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
+                | Delete 
+              button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
+                | Upload     
+
+      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--3-col-desktop
+        .mdl-card__title.mdl-card--expand
+          h2.mdl-card__title-text Photo2
+        .mdl-card__supporting-text.mdl-color-text--grey-600
+          form(method='POST', action='/locations/profile')          
+            .mdl-cell.mdl-cell--12-col.send-button(align='right')
+              a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
+                | Delete 
+              button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
+                | Upload 
+
+      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--3-col-desktop
+        .mdl-card__title.mdl-card--expand
+          h2.mdl-card__title-text Photo3
+        .mdl-card__supporting-text.mdl-color-text--grey-600
+          form(method='POST', action='/locations/profile')          
+            .mdl-cell.mdl-cell--12-col.send-button(align='right')
+              a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
+                | Delete 
+              button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
+                | Upload 
+              
+
+    br
+    br
+  

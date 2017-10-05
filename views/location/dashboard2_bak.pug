@@ -2,7 +2,8 @@ extends ../layout
 
 block content
   .mdl-color--grey-200
-    br
+    .mdl-typography--display-1-color-contrast(style='padding:50px;') #{location.name}
+
     .mdl-grid.demo-content
 
       .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--3-col-desktop.mdl-cell--hide-phone
@@ -18,9 +19,11 @@ block content
           
 
       .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--4-col-tablet.mdl-cell--4-col-desktop
-        #chart1.ct-chart.ct-golden-section
-          h2.mdl-card__title-text(style='margin-left:5px;')  #{location.seatsTaken} seats
-          |  taken
+        svg.demo-chart.mdl-cell.mdl-cell--12-col.mdl-cell--12-col-desktop(fill='currentColor', width='200px', height='200px', viewbox='0 0 1 1')
+          use(xlink:href='#piechart', mask='url(#piemask)')
+          text(x='0.5', y='0.5', font-family='Roboto', font-size='0.3', fill='#888', text-anchor='middle', dy='0.1')
+            | 8
+            tspan(font-size='0.1', dy='-0.07') guests
 
 
 
@@ -53,89 +56,25 @@ block content
       .mdl-tabs.mdl-js-tabs.vertical-mdl-tabs.mdl-js-ripple-effect.mdl-grid.demo-content(style='padding:0;')
         .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col-phone.mdl-cell--3-col-tablet.mdl-cell--3-col-desktop    
             .mdl-tabs__tab-bar(style='padding-top:30px')
-              a.mdl-tabs__tab.is-active(href='/locations/account')
+              a.mdl-tabs__tab.is-active(href='#tab1-panel')
                 span.hollow-circle
                 | Dashboard
-              a.mdl-tabs__tab(href='/locations/account/profile')
+              a.mdl-tabs__tab(href='#tab2-panel')
                 span.hollow-circle
                 | Restaurant Profile
-              a.mdl-tabs__tab(href='/locations/account/payments')
+              a.mdl-tabs__tab(href='#tab3-panel')
                 span.hollow-circle
                 | Payments
-              a.mdl-tabs__tab(href='/locations/account/user')
+              a.mdl-tabs__tab(href='#tab4-panel')
                 span.hollow-circle
-                | User Profile
+                | Login Profile
                 
-        .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--12-col.mdl-cell--5-col-tablet.mdl-cell--9-col-desktop
-          if checkedInUsers && checkedInUsers.length > 0
-            .mdl-card__title(style='min-height:100px')
-              h2.mdl-card__title-text Checked In Now
-            table.mdl-data-table.mdl-js-data-table.mdl-data-table--selectable.mdl-cell.mdl-cell--12-col.mdl-cell--12-col-tablet.mdl-cell--12-col-desktop(style='margin:0;width:100%;border:0')
-              thead
-                tr
-                  th.mdl-data-table__cell--non-numeric Name
-                  th Check In Time
-                  th Message
-              tbody.mdl-color-text--grey
-                for usr in checkedInUsers            
-                  tr
-                    td.mdl-data-table__cell--non-numeric #{usr.profile.name}
-                    td #{usr.checkInTime.toDateString()}
-                    td 
-                      i.material-icons textsms
-          else
-            .mdl-card__title(style='min-height:100px')
-              h2.mdl-card__title-text No one currently checked in
-              
-    .mdl-grid.demo-content
-      .demo-graphs.mdl-shadow--2dp.mdl-color--white.mdl-cell.mdl-cell--9-col.mdl-cell--3-offset-desktop
-        #chart2.ct-chart.ct-golden-section
-
-
-
-  br
-  br
-
-
-
-  script.
-    var local_seats =!{JSON.stringify(location.seats-location.seatsTaken)};
-    //var local_seats =!{JSON.stringify(location.seats)};
-    var local_seats_taken =!{JSON.stringify(location.seatsTaken)};
- 
-    // Initialize a Pie chart in the container with the ID chart1
-    new Chartist.Pie('#chart1', {
-      series: [local_seats_taken, local_seats]
-    }, {
-      donut: true,
-      donutWidth: 40,
-      donutSolid: true,
-      startAngle: 270,
-      showLabel: true
-    });
-
-    //alert('hi');
-    //alert(!{JSON.stringify(store)});
-    var hist = !{JSON.stringify(store)};
-    var arr = Object.values(hist);
-   // for (var i = 0; i < hist.length; i++){
-   //   var obj = hist[i];
-   //   for (var key in obj){
-   //     var attrName = key;
-   //     disp.push(obj[key]);
-   //   }
-   // }
-    //alert(arr);
-    // Initialize a Line chart in the container with the ID chart2
-    new Chartist.Line('#chart2', {
-      labels: [ '-7', '-6', '-5', '-4', '-3', '-2', 'Yest', 'Today'],
-      //series: [[0, 2, 4, 3, 0, 5 ]]
-      series: [arr],
-      onlyInteger: true
-      }, {
-        low: 0,
-        showArea: true,
-        axisY: {
-          onlyInteger: true
-        }      
-        });
+        .mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col-phone.mdl-cell--5-col-tablet.mdl-cell--9-col-desktop
+          #tab1-panel.mdl-tabs__panel.is-active
+            | Dashboard
+          #tab2-panel.mdl-tabs__panel
+            | Profile
+          #tab3-panel.mdl-tabs__panel
+            | Payments      
+          #tab4-panel.mdl-tabs__panel
+            | Login stuff               

@@ -4,10 +4,11 @@ block content
   //.pmainbanner.mdl-typography--text-center(style='background-image: url(/images/' + location.mainimage + ');')
   .pmainbanner.mdl-typography--text-center(style='background-image: url(/uploads/' + location.mainimage + ');')
     .demo-back
-      a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href='/locations', title='all locations', role='button')
+      a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href='/locations', title='all locations', role='button', style='color:white')
         i.material-icons(role='presentation') arrow_back
     .logo-font.android-slogan(style='color:white')   #{location.name}
     .logo-font.android-sub-slogan(style='color:white') #{location.hours}
+    .logo-font.android-sub-slogan(style='color:white') #{location.seats - location.seatsTaken} Seats Available
     //
       div class="logo-font android-create-character">
       <a href=""><img src="images/andy.png"> create your android character</a>
@@ -50,10 +51,10 @@ block content
       .mdl-card.mdl-cell.mdl-cell--12-col
         .mdl-card__supporting-text
           h4 Regular Hours: #{location.hours}
-          h6 #seats: #{location.seats}, #occupied: #{location.seatsTaken}
-          h6 #{location.announcement}           
+          h4.mdl-cell.mdl-cell--12-col.mdl-typography--font-thin #{location.seats} Total Seats,  #{location.seatsTaken} Seats Occupied
+          h6 Announcement: #{location.announcement}           
         .mdl-card__actions
-          a.mdl-button(href='#') Check In Now
+          a.mdl-button(href='/login') Check In Now
       button#btn3.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon
         i.material-icons more_vert
       ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right(for='btn3')
@@ -64,41 +65,65 @@ block content
   section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
     .mdl-card.mdl-cell.mdl-cell--12-col
       .mdl-card__supporting-text.mdl-grid.mdl-grid--no-spacing
-        h4.mdl-cell.mdl-cell--12-col #{location.description}
+        h4.mdl-cell.mdl-cell--12-col.mdl-typography--font-thin #{location.description}
         .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
           .section__circle-container__circle.mdl-color--primary
         .section__text.mdl-cell.mdl-cell--10-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
-          h5 Quiet
-          | Our spaces are quiet so you can concentrate.                  
+          h5 #{location.feature1}
+          |  #{location.feature1desc}                     
         .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
           .section__circle-container__circle.mdl-color--primary
         .section__text.mdl-cell.mdl-cell--10-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
-          h5 Comfortable
-          | Spacious work areas, comfortable chairs, accessible power outlets                   
-          a(href='#') proident minim
-          | .
+          h5 #{location.feature2}
+          |  #{location.feature2desc}                     
+          //a(href='#') proident minim
+          //| .
         .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
           .section__circle-container__circle.mdl-color--primary
         .section__text.mdl-cell.mdl-cell--10-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
-          h5 Convenient
-          |  It takes 30 seconds to join. When you arrive at your location for the day, simply check in online.  We are adding new locations each week.                     
-          a(href='#') Find the location nearest you. 
-          | None in your neighborhood?  Suggest one.
+          h5 #{location.feature3}
+          |  #{location.feature3desc}                     
       .mdl-card__actions
-        a.mdl-button(href='#') Let us know
+        a.mdl-button(href='/login') Check In
         
+  if (location.longdescription)
+    section.section--center.mdl-grid
+      h4.mdl-cell.mdl-cell--12-col.mdl-typography--font-thin !{location.longdescription}  
+        
+  if (location.image3)
+    section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
+      .mdl-card.mdl-cell.mdl-cell--12-col(style='background: url(/uploads/' + location.image3 + ') center/cover;')
 
+  if (location.image4)
+    section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
+      .mdl-card.mdl-cell.mdl-cell--12-col(style='background: url(/uploads/' + location.image4 + ') center/cover;')
+
+  if (location.image5)
+    section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
+      .mdl-card.mdl-cell.mdl-cell--12-col(style='background: url(/uploads/' + location.image5 + ') center/cover;')
+
+  section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
+    .mdl-card.mdl-cell.mdl-cell--12-col
+      .mdl-card__supporting-text
+        h4 #{location.name}
+        h4.mdl-typography--font-thin #{location.address}  #{location.city}, #{location.state}
+        h6 #{location.phone}           
+        h6 #{location.email}           
+      .mdl-card__actions
+        a.mdl-button(href='mailto:' + location.email) Contact Us
 
   section.section--footer.mdl-color--white.mdl-grid
-    .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
-      .section__circle-container__circle.mdl-color--accent.section__circle--big
-    .section__text.mdl-cell.mdl-cell--4-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
-      h5 Tuesdays Only
-      |  Our chef comes in Tuesdays at 11 to prepare a special lunch for $6
-    .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
-      .section__circle-container__circle.mdl-color--accent.section__circle--big
-    .section__text.mdl-cell.mdl-cell--4-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
-      h5 Monday evening, 9/18
-      |  Special $20 prex fixe for Range Members
+    if (location.offer1)
+      .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+        .section__circle-container__circle.mdl-color--accent.section__circle--big
+      .section__text.mdl-cell.mdl-cell--4-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+        h5 #{location.offer1}  
+        |  !{location.offer1desc}  
+    if (location.offer2)
+      .section__circle-container.mdl-cell.mdl-cell--2-col.mdl-cell--1-col-phone
+        .section__circle-container__circle.mdl-color--accent.section__circle--big
+      .section__text.mdl-cell.mdl-cell--4-col-desktop.mdl-cell--6-col-tablet.mdl-cell--3-col-phone
+        h5 #{location.offer2}  
+        |  !{location.offer2desc}  
 
 

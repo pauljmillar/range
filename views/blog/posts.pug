@@ -29,7 +29,7 @@ block content
         .mdl-card__supporting-text
           h4 #{post.title}
           h6 #{post.createdAt.toDateString()}
-          .mdl-typography--headline.mdl-typography--font-thin !{post.text.substr(0, 200) + '...'}
+          h5.mdl-typography--font-thin !{post.text.substr(0, 150) + '...'}
         .mdl-card__actions
           a.mdl-button(href='/blog/' + post.slug)  Read More
           if user

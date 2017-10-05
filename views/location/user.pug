@@ -1,0 +1,65 @@
+extends ../layout
+
+block content
+  .mdl-color--grey-200
+    br
+    .mdl-grid.demo-content
+      .demo-cards.mdl-cell.mdl-cell--4-col.mdl-cell--3-col-desktop.mdl-grid.mdl-grid--no-spacing
+
+        .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop.mdl-cell--hide-phone
+          .mdl-card__title(style='height:160px; background: url(/uploads/' + location.previewimage + ') center/cover; position:relative;')       
+            button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect(style='background-image: url(/uploads/' + location.previewimage + ') center/cover; ')
+          .mdl-card__actions(style='padding: 16px;')
+            | #{location.name}
+            p(style='color:grey') #{user.email}
+          .mdl-card__menu
+            button.mdl-button.mdl-button--icon.mdl-js-button.mdl-js-ripple-effect
+              i.material-icons(style='color:white') edit
+
+        .demo-separator.mdl-cell--1-col
+        .demo-options.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--3-col-tablet.mdl-cell--12-col-desktop
+
+          .mdl-tabs.mdl-js-tabs.vertical-mdl-tabs.mdl-js-ripple-effect(style='padding:0;')
+                .mdl-tabs__tab-bar(style='padding-top:30px')
+                  a.mdl-tabs__tab(href='/locations/account')
+                    span.hollow-circle
+                    | Dashboard
+                  a.mdl-tabs__tab(href='/locations/account/profile')
+                    span.hollow-circle
+                    | Restaurant Profile
+                  a.mdl-tabs__tab(href='/locations/account/payments')
+                    span.hollow-circle
+                    | Payments
+                  a.mdl-tabs__tab.is-active(href='/locations/account/user')
+                    span.hollow-circle
+                    | User Profile          
+
+      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--9-col-desktop
+        .mdl-card__title.mdl-card--expand
+          h2.mdl-card__title-text User Profile
+        .mdl-card__supporting-text.mdl-color-text--grey-600
+          form(method='POST', action='/account/profile')
+            input(type='hidden', name='_csrf', value=_csrf)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='email') Email
+              input#email.mdl-textfield__input(type='email', name='email', value=user.email)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='name') Name
+              input#name.mdl-textfield__input(type='text', name='name', value=user.profile.name)
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='password') Password
+              input#password.mdl-textfield__input(type='password', name='password', pattern='((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})')
+              span.mdl-textfield__error
+                | 6-20 characters with at least a digit, lowercase and uppercase letters,
+                | and special symbol in @#$%
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+              label.mdl-textfield__label.mdl-color-text--grey(for='confirmPassword') Confirm Password
+              input#confirmPassword.mdl-textfield__input(type='password', name='confirmPassword')
+
+            .mdl-cell.mdl-cell--12-col.send-button(align='right')
+              button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
+                | Update
+               
+    br
+    br
+  

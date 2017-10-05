@@ -6,7 +6,7 @@ const Post = require('../models/Post');
  */
 exports.getPosts = (req, res) => {
 
-  Post.find({ active:true }, (err, allPosts) => {
+  Post.find({ active:true }, null, {sort: {updatedAt: -1}}, (err, allPosts) => {
     if (err) { return next(err); }
     if (!allPosts) {
       req.flash('errors', { msg: 'Found no posts.' });

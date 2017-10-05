@@ -35,13 +35,15 @@ block content
       .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop
         form(method='POST', action='/account/checkin')
           input(type='hidden', name='_csrf', value=_csrf)
+          
           if user.checkInTime && (user.checkInTime.getDate() == new Date().getDate())
+            input(type='hidden', name='locationid', value=user.checkInLocation)
             .mdl-card__title.mdl-card--expand.mdl-color--teal-300
               h2.mdl-card__title-text Check Out
             .mdl-card__supporting-text.mdl-color-text--grey-600
                 | You are currently checked in at 
                 .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-                  select#locationid.mdl-textfield__input(name='locationid', disabled)
+                  select#yourlocation.mdl-textfield__input(name='yourlocation', disabled)
                     for location in allLocations
                       option(selected=location.id == user.checkInLocation, value=location.id) #{location.name}
             .mdl-card__actions.mdl-card--border

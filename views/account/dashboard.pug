@@ -1,0 +1,76 @@
+extends ../layout
+
+block content
+  .mdl-color--grey-200
+    br
+    .mdl-grid.demo-content
+
+      .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--3-col-desktop.mdl-cell--hide-phone
+        .mdl-card__title(style='height:160px; background: url(/uploads/' + user.profile.picture + ') center/cover; position:relative;')       
+          button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect(style='background-image: url(/uploads/' + user.profile.picture + ') center/cover; ')
+        .mdl-card__actions(style='padding: 16px;')
+          | #{user.profile.name}
+          p(style='color:grey') #{user.email}
+
+        .mdl-card__menu
+          button.mdl-button.mdl-button--icon.mdl-js-button.mdl-js-ripple-effect
+            i.material-icons(style='color:white') edit
+          
+
+
+
+      .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--12-col.mdl-cell--5-col-tablet.mdl-cell--9-col-desktop
+            
+        form(method='POST', action='/account/checkin')
+          input(type='hidden', name='_csrf', value=_csrf)
+
+          if user.checkInTime && (user.checkInTime.getDate() == new Date().getDate())
+            input(type='hidden', name='locationid', value=user.checkInLocation)
+            .mdl-card__title
+              h2.mdl-card__title-text Check Out
+            .mdl-card__supporting-text.mdl-color-text--grey-600
+                | You are currently checked in at 
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  select#yourlocation.mdl-textfield__input(name='yourlocation', disabled)
+                    for location in allLocations
+                      option(selected=location.id == user.checkInLocation, value=location.id) #{location.name}
+            .mdl-card__actions.mdl-card--border
+              button.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#', type='submit') Check Out
+
+          else  
+            .mdl-card__title
+              h2.mdl-card__title-text Check In
+            .mdl-card__supporting-text.mdl-color-text--grey-600
+                | Choose a location: 
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                  select#locationid.mdl-textfield__input(name='locationid')
+                    for location in allLocations
+                      option(selected=location.id == user.profile.homelocation, value=location.id) #{location.name}
+            .mdl-card__actions.mdl-card--border
+              button.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#', type='submit') Check In
+              a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#') Map              
+
+
+      .mdl-tabs.mdl-js-tabs.vertical-mdl-tabs.mdl-js-ripple-effect.mdl-grid.demo-content(style='padding:0;')
+        .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col-phone.mdl-cell--3-col-tablet.mdl-cell--3-col-desktop    
+            .mdl-tabs__tab-bar(style='padding-top:30px')
+              a.mdl-tabs__tab.is-active(href='/account')
+                span.hollow-circle
+                | Dashboard
+
+              a.mdl-tabs__tab(href='/account/payments')
+                span.hollow-circle
+                | Payments
+              a.mdl-tabs__tab(href='/account/user')
+                span.hollow-circle
+                | User Profile
+                
+
+
+
+
+  br
+  br
+
+
+
