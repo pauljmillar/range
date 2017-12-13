@@ -15,6 +15,7 @@ const lob = require('lob')(process.env.LOB_KEY);
 const ig = bluebird.promisifyAll(require('instagram-node').instagram());
 const fs = require('fs');
 const Location = require('../models/Location');
+const User = require('../models/User');
 
 const foursquare = require('node-foursquare')({
   secrets: {
@@ -574,7 +575,7 @@ exports.postFileUploadLocation = (req, res) => {
 
     // renaming real file to it's original name
     //fs.rename(file, './public/pages/'+request.params.pageId+'/'+fileName, function (err) {
-    fs.rename(file, './public/uploads/'+fileName, function (err) {
+    fs.rename(file, './public/uploads/'+req.user.id+'/'+fileName, function (err) {
       if (err) {
         console.log(err);
          req.flash('error', { msg: err });
@@ -612,7 +613,7 @@ exports.postFileUploadUser = (req, res) => {
 
     // renaming real file to it's original name
     //fs.rename(file, './public/pages/'+request.params.pageId+'/'+fileName, function (err) {
-    fs.rename(file, './public/uploads/'+fileName, function (err) {
+    fs.rename(file, './public/uploads/'+req.user.id+'/'+fileName, function (err) {
       if (err) {
         console.log(err);
          req.flash('error', { msg: err });
@@ -621,12 +622,14 @@ exports.postFileUploadUser = (req, res) => {
 
 			//update the location record in the asset record
       User.findById(req.params.userid, (err, usr) => {
-        if (err) { return next(err); }
+        if (err) { req.flash('errors', { msg: 'Sorry, there was a problem loading this picture.' }); }
         usr.profile.picture = fileName;
         usr.save((err) => {
-          if (err) { return next(err); }
+        	if (err) { req.flash('errors', { msg: 'Sorry, there was a problem loading this picture.' }); 
+									 } else {
           req.flash('success', { msg: 'Photo was uploaded successfully.' });
           res.redirect('/account');
+									 }
         });
       });
 			

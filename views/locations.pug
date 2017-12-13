@@ -41,7 +41,7 @@ block content
 
   for loc in allLocations
     section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
-      header.section__play-btn.mdl-cell.mdl-cell--3-col-desktop.mdl-cell--2-col-tablet.mdl-cell--4-col-phone.mdl-color--teal-100.mdl-color-text--white(style='background-image: url(/uploads/' + loc.previewimage + ');')
+      header.section__play-btn.mdl-cell.mdl-cell--3-col-desktop.mdl-cell--2-col-tablet.mdl-cell--4-col-phone.mdl-color--teal-100.mdl-color-text--white(style='background-image: url(/uploads/' + loc.locationuserid + '/' + loc.previewimage + ');')
         a.mdl-button(href='/locations/' + loc.locationid, style='text-decoration:none; color:white')
           i.material-icons play_circle_filled
       .mdl-card.mdl-cell.mdl-cell--9-col-desktop.mdl-cell--6-col-tablet.mdl-cell--4-col-phone

@@ -7,7 +7,7 @@ block content
       .demo-cards.mdl-cell.mdl-cell--4-col.mdl-cell--3-col-desktop.mdl-grid.mdl-grid--no-spacing
 
         .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop.mdl-cell--hide-phone
-          .mdl-card__title(style='height:160px; background: url(/uploads/' + location.previewimage + ') center/cover; position:relative;')       
+          .mdl-card__title(style='height:160px; background: url(/uploads/' + user._id + '/' + location.previewimage + ') center/cover; position:relative;')       
             button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect(style='background-image: url(/uploads/' + location.previewimage + ') center/cover; ')
           .mdl-card__actions(style='padding: 16px;')
             | #{location.name}

@@ -975,7 +975,7 @@ _:-ms-input-placeholder, :root .demo-graph {
 }
 
 /***************FILE UPLOAD*******************/
-.file-upload {
+/**.file-upload {
     display: inline-block;
     position: relative;
     overflow: hidden;
@@ -1002,4 +1002,30 @@ _:-ms-input-placeholder, :root .demo-graph {
 .file-upload_result {
     display: block;
     padding: 14px;
+}**/
+
+.custom-file-upload {
+    /*border: 1px solid #ccc;*/
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+.custom-file-upload:hover {
+  background: rgba(158, 158, 158, 0.34);
+  color: black;
+}
+input[type="file"] {
+    display: none;
+}
+
+/*** picture file upload  ****/
+.image-upload > input
+{
+    display: none;
+}
+
+.image-upload img
+{
+    width: 80px;
+    cursor: pointer;
 }

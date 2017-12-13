@@ -6,18 +6,22 @@ block content
     .mdl-grid.demo-content
       .demo-cards.mdl-cell.mdl-cell--4-col.mdl-cell--3-col-desktop.mdl-grid.mdl-grid--no-spacing
 
-        .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop.mdl-cell--hide-phone
-          .mdl-card__title(style='height:160px; background: url(/uploads/' + user.profile.picture + ') center/cover; position:relative;')       
+        .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop
+          .mdl-card__title(style='height:160px; background: url(/uploads/' + user._id + '/' + user.profile.picture + ') center/cover; position:relative;')       
             button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect(style='background-image: url(/uploads/' + user.profile.picture + ') center/cover; ')
           .mdl-card__actions(style='padding: 16px;')
             | #{user.profile.name}
             p(style='color:grey') #{user.email}
           .mdl-card__menu
-            button.mdl-button.mdl-button--icon.mdl-js-button.mdl-js-ripple-effect
-              i.material-icons(style='color:white') edit
+            form#picform(role='form', enctype='multipart/form-data', method='POST', action='/api/upload/user/'+user._id+'/profile')          
+                .image-upload
+                  label(for='file-input')
+
+                      i.material-icons(style='color:grey; cursor:pointer') edit
+                  input#file-input(type='file', name='myFile')
 
         .demo-separator.mdl-cell--1-col
-        .demo-options.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--3-col-tablet.mdl-cell--12-col-desktop
+        .demo-options.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--3-col-tablet.mdl-cell--12-col-desktop.mdl-cell--hide-phone
 
           .mdl-tabs.mdl-js-tabs.vertical-mdl-tabs.mdl-js-ripple-effect(style='padding:0;')
                 .mdl-tabs__tab-bar(style='padding-top:30px')
@@ -67,4 +71,10 @@ block content
                
     br
     br
-  
+
+    script.
+      document.getElementById("file-input").onchange = function() {
+        //alert('hi');
+        document.getElementById("picform").submit();
+      }
+

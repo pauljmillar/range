@@ -7,8 +7,8 @@ block content
       .demo-cards.mdl-cell.mdl-cell--4-col.mdl-cell--3-col-desktop.mdl-grid.mdl-grid--no-spacing
 
         .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--12-col-desktop.mdl-cell--hide-phone
-          .mdl-card__title(style='height:160px; background: url(/uploads/' + location.previewimage + ') center/cover; position:relative;')       
-            button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect(style='background-image: url(/uploads/' + location.previewimage + ') center/cover; ')
+          .mdl-card__title(style='height:160px; background: url(/uploads/' + user._id + '/' + location.previewimage + ') center/cover; position:relative;')       
+            button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect(style='background-image: url(/uploads/' + user._id + '/' + location.previewimage + ') center/cover; ')
           .mdl-card__actions(style='padding: 16px;')
             | #{location.name}
             p(style='color:grey') #{user.email}
@@ -47,10 +47,10 @@ block content
               input(type='hidden', name='locationuserid', value=user._id)          
             .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
               label.mdl-textfield__label.mdl-color-text--grey(for='name') Restaurant Name
-              input#name.mdl-textfield__input(type='text', name='name', value=location.name)
+              input#name.mdl-textfield__input(type='text', name='name', value=location.name, required)
             .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
               label.mdl-textfield__label.mdl-color-text--grey(for='locationid') Unique Restaurant Name
-              input#locationid.mdl-textfield__input(type='text', name='locationid', value=location.locationid, pattern='^[a-z0-9_]{6,15}$')
+              input#locationid.mdl-textfield__input(type='text', name='locationid', value=location.locationid, pattern='^[a-z0-9_]{6,15}$', required)
               span.mdl-textfield__error
                 | 6-15 lowercase characters or underscores only, no spaces
             .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
@@ -164,47 +164,95 @@ block content
               button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
                 | Update
                 
-      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--3-col-desktop.mdl-cell--3-offset-desktop
+      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--3-col-desktop.mdl-cell--3-offset-desktop(style='background: url(/uploads/' + user._id + '/' + location.mainimage + ') center/cover; position:relative;')
         .mdl-card__title.mdl-card--expand
-          h2.mdl-card__title-text Photo1
+          h2.mdl-card__title-text Banner
         .mdl-card__supporting-text.mdl-color-text--grey-600
-          form(method='POST', action='/locations/profile')      
-            //label.mdl-textfield__label.mdl-color-text--grey(for='myFile') 
-            //#{location.mainimage}
-            //button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='file', name='myFile')
-            //input(type='file', name='myFile')
-            label.file-upload
-              input#file(type='file', name='myFile', multiple='', accept='image/*, video/*')
-              span.file-upload_button Choose Files
+          form(role='form', enctype='multipart/form-data', method='POST', action='/api/upload/location/'+location._id+'/mainimage')
+            //input(type='hidden', name='_csrf', value=_csrf)
+            label.custom-file-upload
+              input(type='file', name='myFile')
+              if location.mainimage
+                |  #{location.mainimage} 
+              else
+                | Select >
             .mdl-cell.mdl-cell--12-col.send-button(align='right')
-              a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
-                | Delete 
+              //a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
+              //  | Delete 
               button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
                 | Upload     
 
-      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--3-col-desktop
+      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--3-col-desktop(style='background: url(/uploads/' + user._id + '/' + location.previewimage + ') center/cover; position:relative;')
         .mdl-card__title.mdl-card--expand
-          h2.mdl-card__title-text Photo2
+          h2.mdl-card__title-text Preview
         .mdl-card__supporting-text.mdl-color-text--grey-600
-          form(method='POST', action='/locations/profile')          
+          form(role='form', enctype='multipart/form-data', method='POST', action='/api/upload/location/'+location._id+'/previewimage')
+            label.custom-file-upload
+              //input(type='hidden', name='_csrf', value=_csrf)
+              input(type='file', name='myFile')
+              if location.previewimage
+                |  #{location.previewimage} 
+              else
+                | Select >
             .mdl-cell.mdl-cell--12-col.send-button(align='right')
-              a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
-                | Delete 
+              //a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
+              //  | Delete 
               button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
-                | Upload 
+                | Upload  
 
-      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--3-col-desktop
+      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--3-col-desktop(style='background: url(/uploads/' + user._id + '/' + location.image3 + ') center/cover; position:relative;')
         .mdl-card__title.mdl-card--expand
-          h2.mdl-card__title-text Photo3
+          h2.mdl-card__title-text Additional 1
         .mdl-card__supporting-text.mdl-color-text--grey-600
-          form(method='POST', action='/locations/profile')          
+          form(role='form', enctype='multipart/form-data', method='POST', action='/api/upload/location/'+location._id+'/image3')
+            label.custom-file-upload
+              //input(type='hidden', name='_csrf', value=_csrf)
+              input(type='file', name='myFile')
+              if location.image3
+                |  #{location.image3} 
+              else
+                | Select >
             .mdl-cell.mdl-cell--12-col.send-button(align='right')
-              a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
-                | Delete 
+              //a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
+              //  | Delete 
               button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
-                | Upload 
+                | Upload  
               
-
+      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--3-col-desktop.mdl-cell--3-offset-desktop(style='background: url(/uploads/' + user._id + '/' + location.image4 + ') center/cover; position:relative;')
+        .mdl-card__title.mdl-card--expand
+          h2.mdl-card__title-text Additional 2
+        .mdl-card__supporting-text.mdl-color-text--grey-600
+          form(role='form', enctype='multipart/form-data', method='POST', action='/api/upload/location/'+location._id+'/image4')
+            label.custom-file-upload
+              //input(type='hidden', name='_csrf', value=_csrf)
+              input(type='file', name='myFile')
+              if location.image4
+                |  #{location.image4} 
+              else
+                | Select >
+            .mdl-cell.mdl-cell--12-col.send-button(align='right')
+              //a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
+              //  | Delete 
+              button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
+                | Upload  
+                
+      .demo-charts.mdl-color--white.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-grid.mdl-cell--5-col-tablet.mdl-cell--3-col-desktop(style='background: url(/uploads/' + user._id + '/' + location.image5 + ') center/cover; position:relative;')
+        .mdl-card__title.mdl-card--expand
+          h2.mdl-card__title-text Additional 3
+        .mdl-card__supporting-text.mdl-color-text--grey-600
+          form(role='form', enctype='multipart/form-data', method='POST', action='/api/upload/location/'+location._id+'/image5')
+            label.custom-file-upload
+              //input(type='hidden', name='_csrf', value=_csrf)
+              input(type='file', name='myFile')
+              if location.image5
+                |  #{location.image5} 
+              else
+                | Select >
+            .mdl-cell.mdl-cell--12-col.send-button(align='right')
+              //a#login.mdl-button.mdl-js-button.mdl-button--accent(href='/forgot')
+              //  | Delete 
+              button#login.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(type='submit')
+                | Upload                  
     br
     br
   

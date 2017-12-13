@@ -53,7 +53,7 @@ exports.getLocation = (req, res) => {
  * GET /locations/account
  * Profile page for locations after logging in.
  */
-exports.getLocationDashboard= (req, res) => {
+exports.getLocationDashboard = (req, res) => {
 	
 	var sample = 7,
     Days = 7,
@@ -73,17 +73,26 @@ exports.getLocationDashboard= (req, res) => {
   Location.findOne({ locationuserid:locationuserid }, (err, location) => {
     if (err) { return next(err); }
     if (!location) {
+			console.log('no location');
       req.flash('errors', { msg: 'Create your account.' });
-      location = {};
+      location = {}, checkedInUsers = {}, store = {};
+			return res.render('location/profile', {
+      	title: 'Restaurant Profile',
+      	location, 
+				checkedInUsers, 
+				store
+      });
+			
     }
 
     //find checked in users for location
     console.log('running here:' + locationuserid);
+    console.log('loc id:' + location._id);
     User.find({ checkInLocation:location._id })
     .sort({checkInTime: -1})
     //.populate('checkInLocation')
     .exec((err, checkedInUsers) => {
-      console.log('inside query');
+      console.log('inside query' + checkedInUsers.toString());
       if (err) { return next(err); }
       if (!checkedInUsers) {
         req.flash('errors', { msg: 'No members checked in.' });

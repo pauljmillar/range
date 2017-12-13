@@ -6,7 +6,7 @@ block content
     .mdl-grid.demo-content
 
       .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-cell--3-col-desktop.mdl-cell--hide-phone
-        .mdl-card__title(style='height:160px; background: url(/uploads/' + user.profile.picture + ') center/cover; position:relative;')       
+        .mdl-card__title(style='height:160px; background: url(/uploads/' + user._id + '/' + user.profile.picture + ') center/cover; position:relative;')       
           button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect(style='background-image: url(/uploads/' + user.profile.picture + ') center/cover; ')
         .mdl-card__actions(style='padding: 16px;')
           | #{user.profile.name}
@@ -19,7 +19,7 @@ block content
 
 
 
-      .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--12-col.mdl-cell--5-col-tablet.mdl-cell--9-col-desktop
+      .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--12-col.mdl-cell--5-col-tablet.mdl-cell--9-col-desktop.mdl-card--expand
             
         form(method='POST', action='/account/checkin')
           input(type='hidden', name='_csrf', value=_csrf)
@@ -34,6 +34,7 @@ block content
                   select#yourlocation.mdl-textfield__input(name='yourlocation', disabled)
                     for location in allLocations
                       option(selected=location.id == user.checkInLocation, value=location.id) #{location.name}
+
             .mdl-card__actions.mdl-card--border
               button.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#', type='submit') Check Out
 
@@ -50,9 +51,11 @@ block content
               button.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#', type='submit') Check In
               a.mdl-button.mdl-js-button.mdl-js-ripple-effect(href='#') Map              
 
-
+      .mdl-cell--hide-desktop(style='height:100px')
+        | &nbsp;
+                
       .mdl-tabs.mdl-js-tabs.vertical-mdl-tabs.mdl-js-ripple-effect.mdl-grid.demo-content(style='padding:0;')
-        .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col-phone.mdl-cell--3-col-tablet.mdl-cell--3-col-desktop    
+        .demo-updates.mdl-card.mdl-shadow--2dp.mdl-cell.mdl-cell--4-col-phone.mdl-cell--3-col-tablet.mdl-cell--3-col-desktop.mdl-cell--hide-phone    
             .mdl-tabs__tab-bar(style='padding-top:30px')
               a.mdl-tabs__tab.is-active(href='/account')
                 span.hollow-circle

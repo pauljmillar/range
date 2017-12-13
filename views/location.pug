@@ -2,7 +2,7 @@ extends layout
 
 block content
   //.pmainbanner.mdl-typography--text-center(style='background-image: url(/images/' + location.mainimage + ');')
-  .pmainbanner.mdl-typography--text-center(style='background-image: url(/uploads/' + location.mainimage + ');')
+  .pmainbanner.mdl-typography--text-center(style='background-image: url(/uploads/' + location.locationuserid + '/' + location.mainimage + ');')
     .demo-back
       a.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--icon(href='/locations', title='all locations', role='button', style='color:white')
         i.material-icons(role='presentation') arrow_back
@@ -92,15 +92,15 @@ block content
         
   if (location.image3)
     section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
-      .mdl-card.mdl-cell.mdl-cell--12-col(style='background: url(/uploads/' + location.image3 + ') center/cover;')
+      .mdl-card.mdl-cell.mdl-cell--12-col(style='background: url(/uploads/' + location.locationuserid + '/' + location.image3 + ') center/cover;')
 
   if (location.image4)
     section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
-      .mdl-card.mdl-cell.mdl-cell--12-col(style='background: url(/uploads/' + location.image4 + ') center/cover;')
+      .mdl-card.mdl-cell.mdl-cell--12-col(style='background: url(/uploads/' + location.locationuserid + '/' + location.image4 + ') center/cover;')
 
   if (location.image5)
     section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
-      .mdl-card.mdl-cell.mdl-cell--12-col(style='background: url(/uploads/' + location.image5 + ') center/cover;')
+      .mdl-card.mdl-cell.mdl-cell--12-col(style='background: url(/uploads/' + location.locationuserid + '/' + location.image5 + ') center/cover;')
 
   section.section--center.mdl-grid.mdl-grid--no-spacing.mdl-shadow--2dp.ptop
     .mdl-card.mdl-cell.mdl-cell--12-col
@@ -108,6 +108,7 @@ block content
         h4 #{location.name}
         h4.mdl-typography--font-thin #{location.address}  #{location.city}, #{location.state}
         h6 #{location.phone}           
+        a.h6(href=location.website) #{location.website}           
         h6 #{location.email}           
       .mdl-card__actions
         a.mdl-button(href='mailto:' + location.email) Contact Us

@@ -124,13 +124,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
-  if (req.path === '/api/upload/:locationid') {
+  if (req.path.substring(0,12) === '/api/upload/') {
     next();
   } else {
     //pjm disabling until getting pug login pages
-   // lusca.csrf()(req, res, next);
+   lusca.csrf()(req, res, next);
     //remove below after reenable csrf above
-    next();
+    //next();
   }
 });
 app.use(lusca.xframe('SAMEORIGIN'));

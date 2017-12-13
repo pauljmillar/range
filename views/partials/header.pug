@@ -19,10 +19,10 @@ header.mdl-layout__header.android-header.mdl-layout__header--waterfall
       if user
         if user.isLocation
           a(href='/locations/account', style='text-decoration:none')
-            li.mdl-menu__item Profile
+            li.mdl-menu__item Account
         else
           a(href='/account', style='text-decoration:none')
-            li.mdl-menu__item Profile        
+            li.mdl-menu__item Account        
         a(href='/logout', style='text-decoration:none')
           li.mdl-menu__item Sign Out
       else
@@ -38,6 +38,18 @@ header.mdl-layout__header.android-header.mdl-layout__header--waterfall
     | range
     // img class="android-logo-image" src="images/android-logo-white.png"
   nav.mdl-navigation
+    if user
+      if user.isLocation
+        a.mdl-navigation__link(href='/locations/account') Dashboard
+        a.mdl-navigation__link(href='/locations/account/profile') Profile
+        a.mdl-navigation__link(href='/locations/account/payments') Payments
+        a.mdl-navigation__link(href='/locations/account/user') User
+        .android-drawer-separator
+      else
+        a.mdl-navigation__link(href='/account') Dashboard
+        a.mdl-navigation__link(href='/account/user') Profile
+        a.mdl-navigation__link(href='/account/payments') Payments
+        .android-drawer-separator        
     a.mdl-navigation__link(href='/locations') Locations
     a.mdl-navigation__link(href='/join') How it works
     a.mdl-navigation__link(href='/join') Why

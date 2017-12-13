@@ -7,6 +7,7 @@ const path = require('path');
 const Location = require('../models/Location');
 const Evt = require('../models/Event');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
+var fs = require('fs');
 
 /**
  * GET /login
@@ -153,15 +154,24 @@ exports.postSignup = (req, res, next) => {
       req.flash('errors', { msg: 'Account with that email address already exists.' });
       return res.redirect('/login');
     }
-    user.save((err) => {
+    user.save((err, usr) => {
       if (err) { return next(err); }
       req.logIn(user, (err) => {
         if (err) {
           return next(err);
         }
         //alert admin of new signupsendSignupEmail;
-        sendSignupEmail(user);
-        return res.redirect('/account');
+
+				//create folder and file
+				var dirpath = "./public/uploads/"+usr._id;
+					
+				fs.mkdir(dirpath, function(err) {
+    			if (err) throw err;									
+    			console.log("The directory was succesfully created!");
+          
+          sendSignupEmail(user);
+          return res.redirect('/account');
+        }); 	        
       });
     });
   });
@@ -190,6 +200,29 @@ exports.postLocationSignup = (req, res, next) => {
     password: req.body.password,
     isLocation: true
   });
+
+  const sendSignupEmail = (user) => {   
+       
+    const transporter = nodemailer.createTransport(
+      sendgridTransport({
+        auth: {
+          api_key: process.env.SENDGRID_PASSWORD, // SG password
+        },
+      })
+    );
+    
+    const mailOptions = {
+      to: 'paul.millar@gmail.com',
+      from: 'signup@rangeco.work',
+      subject: `New Range Restaurant Signup: ${user.email}`,
+      text: `Hello,\n\nRange user ${user.email} has just signed up.\n`
+    };
+    
+    return transporter.sendMail(mailOptions)
+      .then(() => {
+        req.flash('success', { msg: 'Welcome to Range.' });
+      }); 
+  };  
   
 
   User.findOne({ email: req.body.email }, (err, existingUser) => {
@@ -198,13 +231,24 @@ exports.postLocationSignup = (req, res, next) => {
       req.flash('errors', { msg: 'Account with that email address already exists.' });
       return res.redirect('/locations/signup');
     }
-    user.save((err, returnedUser) => {
+    user.save((err, usr) => {
       if (err) { return next(err); }
       req.logIn(user, (err) => {
         if (err) {
           return next(err);
         }     
-       res.redirect('/locations/account');
+
+				//create folder and file
+				var dirpath = "./public/uploads/"+usr._id;
+					
+				fs.mkdir(dirpath, function(err) {
+    			if (err) throw err;									
+    			console.log("The directory was succesfully created!");
+          
+          sendSignupEmail(user);
+          return res.redirect('/locations/account');
+        });       
+      
       });
     });
   });
@@ -282,7 +326,10 @@ exports.postUpdateProfile = (req, res, next) => {
         return next(err);
       }
       req.flash('success', { msg: 'Profile information has been updated.' });
-      res.redirect('/account');
+      if (user.isLocation)
+        res.redirect('/locations/account');
+      else
+        res.redirect('/account');
     });
   });
 };
